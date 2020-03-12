@@ -9,10 +9,12 @@ import MessageState from './components/MessageState'
 import Counter from './components/Counter'
 import ParentComponent from './components/ParentComponent'
 import GetCallService from './components/GetCallService'
+import SampleTable from './components/SampleTable'
 
 function App() {
   return (
     <div className="App">
+      {/* <SampleTable/> */}
 <GetCallService/>
       {/* <ParentComponent/> */}
    {/* <Counter/> */}
