@@ -63,7 +63,7 @@ class GetCallService extends Component {
       </div>
       <Table aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow >
             <TableCell><h1>UserName</h1></TableCell>
             <TableCell align="right"><h1>email</h1></TableCell>
             <TableCell align="right"><h1>Password</h1></TableCell>
