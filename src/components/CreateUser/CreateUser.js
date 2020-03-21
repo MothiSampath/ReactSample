@@ -10,7 +10,8 @@ export default class CreateUser extends React.Component {
         this.state = {
             username: '',
             email: '',
-            password: null
+            password: '',
+            file: null
         };
     }
 
@@ -25,11 +26,18 @@ export default class CreateUser extends React.Component {
         if (Number(username)) {
             alert("user name should not be numbers");
         }
-        axios.post('http://localhost:8080/users/saveUser', {
-            userName: this.state.username,
-            password: this.state.password,
-            email: this.state.email
-        })
+        console.log("To show State")
+        console.log(this.state)
+
+        let formdata = new FormData()
+        formdata.append('userName', this.state.username)
+        formdata.append('password', this.state.password)
+        formdata.append('email', this.state.email)
+        formdata.append('fileToUpload', this.state.file)
+
+        axios.post('http://localhost:8080/users/saveUser', formdata
+           
+        )
             .then(function (response) {
                 console.log(response);
                 alert('Success')
@@ -46,6 +54,12 @@ export default class CreateUser extends React.Component {
         let nam = event.target.name;
         let val = event.target.value;
         this.setState({[nam]: val});
+    }
+
+    myFileHandler = (event) =>{
+        let file = event.target.files[0]
+
+        this.setState({file: file})
     }
 
     render() {
@@ -71,11 +85,15 @@ export default class CreateUser extends React.Component {
                     onChange={this.myChangeHandler}
                 />
                 <br/>
+                <p>Upload a file</p>
+                <input
+                    type='file'
+                    name='file'
+                    onChange={this.myFileHandler}
+                />
                 <br/>
                 <input type='submit'/>
             </form>
-
-
         );
     }
 }
