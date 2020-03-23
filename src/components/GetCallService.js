@@ -34,11 +34,53 @@ class GetCallService extends Component {
     componentDidMount(){
         axios.get('http://localhost:8080/users/getAllUsers')
         .then(response => {
-            this.setState({users : response.data})
+          this.setState({users : response.data})
+            console.log(response)
         })
         .catch(error =>{
             console.log(error)
         })
+    }
+
+    deleteuser(id){
+      console.log('ID to delete>>' +id)
+      alert("User has been successfully deleted")
+      axios.delete('http://localhost:8080/users/deleteUser/'+id)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
+
+    // downloadAttachment(id){
+     
+    //   axios.get('http://localhost:8080/users/getUserAttachment/'+id)
+    //     .then(response => {
+    //         console.log(response)
+    //         const filename =  id;
+    //         let blob = new Blob(response)
+    //         var url = URL.createObjectURL(blob);
+    //         window.open(url);
+    //     })
+    //     .catch(error =>{
+    //         console.log(error)
+    //     })
+    // }
+
+    downloadAttachment(id){
+      fetch('http://localhost:8080/users/getUserAttachment/'+id)
+        .then(response => {
+          response.blob().then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = id+response.type;
+            a.click();
+          });
+          //window.location.href = response.url;
+      });
     }
 
     render() {
@@ -65,9 +107,9 @@ class GetCallService extends Component {
         <TableHead>
           <TableRow >
             <TableCell><h1>UserName</h1></TableCell>
-            <TableCell align="right"><h1>email</h1></TableCell>
-            <TableCell align="right"><h1>Password</h1></TableCell>
-           
+            <TableCell align="left"><h1>email</h1></TableCell>
+            <TableCell align="left"><h1>Password</h1></TableCell>
+           {/* <TableCell align="left"><h1>deleteUser</h1></TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -76,8 +118,11 @@ class GetCallService extends Component {
               <TableCell component="th" scope="row">
                 {row.userName}
               </TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.password}</TableCell>
+              <TableCell align="left">{row.email}</TableCell>
+              <TableCell type="password" align="left">{row.password}</TableCell>
+              {/* <TableCell align="left"><button onClick={this.deleteuser(row.id)}>delete</button></TableCell> */}
+              <TableCell align="left"><button onClick={() => this.deleteuser(row.id)}>delete</button></TableCell>
+              <TableCell align="left"><button onClick={() => this.downloadAttachment(row.id)}>Download Photo</button></TableCell>
             </TableRow>
           ))}
         </TableBody>

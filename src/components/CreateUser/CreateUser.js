@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
+import Popup from 'reactjs-popup'
 import App from '../../App';
 
 
@@ -11,7 +12,8 @@ export default class CreateUser extends React.Component {
             username: '',
             email: '',
             password: '',
-            file: null
+            file: null,
+            isPopupOpen: true
         };
     }
 
@@ -48,6 +50,11 @@ export default class CreateUser extends React.Component {
                 console.log(error);
 
             });
+            // this.popup.current.leafletElement.options.leaflet.map.closePopup();
+            // window.opener.location.reload(true);
+            // window.Popup.close;
+
+            this.setState({isPopupOpen:false})
     }
 
     myChangeHandler = (event) => {
@@ -64,6 +71,7 @@ export default class CreateUser extends React.Component {
 
     render() {
         return (
+        <Popup show={this.state.isPopupOpen}  trigger={<button> Create User</button>} position="bottom center">
             <form onSubmit={this.mySubmitHandler}>
                 <h1>Save User</h1>
                 <p>UserName:</p>
@@ -80,7 +88,7 @@ export default class CreateUser extends React.Component {
                 />
                 <p>Password:</p>
                 <input
-                    type='text'
+                    type='password'
                     name='password'
                     onChange={this.myChangeHandler}
                 />
@@ -94,6 +102,7 @@ export default class CreateUser extends React.Component {
                 <br/>
                 <input type='submit'/>
             </form>
+           </Popup> 
         );
     }
 }

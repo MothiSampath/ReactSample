@@ -11,6 +11,7 @@ import ParentComponent from './components/ParentComponent'
 import GetCallService from './components/GetCallService'
 import SampleTable from './components/SampleTable'
 import Popup from "reactjs-popup"
+import PopupClose from "./components/PopupClose"
 import CreateUser from './components/CreateUser/CreateUser'
 import {
   BrowserRouter as Router,
@@ -19,16 +20,52 @@ import {
   Link
 } from "react-router-dom";
 
-function App() {
+class App extends React.Component{
+
+
+
+constructor(props) {
+  super(props);
+
+  this.state = { isOpen: true };
+}
+
+openPopup = () => {
+  this.setState({
+    isOpen: true
+  });
+}
+
+closePopup = () => {
+  this.setState({
+    isOpen: false
+  });
+}
+
+render() {
   return (
     <div className="App">
+
+
+        {/* <button onClick={this.openPopup}>
+          Create User
+        </button>
+
+        <Popup show={this.state.isOpen}
+          onClose={this.closePopup}>
+          <CreateUser/>
+        </Popup> */}
 
     <Router>
       <div>
             <Switch>
-                <Popup trigger={<button> Create User</button>} position="bottom center">
-                    <CreateUser/>
-                </Popup>
+                {/* <Popup trigger={<button> Create User</button>} position="bottom center"> */}
+                  {/* <PopupClose show={this.state.isOpen}
+                    onClose={this.closePopup}>
+                      <CreateUser/>
+                  </PopupClose>  */}
+                  <CreateUser/>
+                {/* </Popup> */}
             </Switch>
       </div>
     </Router>
@@ -49,6 +86,7 @@ function App() {
       <HelloWithoutJSX name='mothi'/> */}
     </div>
   );
+}
 }
 
 export default App;
