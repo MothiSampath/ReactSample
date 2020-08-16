@@ -78,6 +78,22 @@ class GetCallService extends Component {
             a.href = url;
             a.download = id+response.type;
             a.click();
+            window.open(url)
+          });
+          //window.location.href = response.url;
+      });
+    }
+
+    downloadPdf(id){
+      fetch('http://localhost:8080/users/getPdf/'+id)
+        .then(response => {
+          response.blob().then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = id+response.type;
+            a.click();
+            window.open(url)
           });
           //window.location.href = response.url;
       });
@@ -123,6 +139,8 @@ class GetCallService extends Component {
               {/* <TableCell align="left"><button onClick={this.deleteuser(row.id)}>delete</button></TableCell> */}
               <TableCell align="left"><button onClick={() => this.deleteuser(row.id)}>delete</button></TableCell>
               <TableCell align="left"><button onClick={() => this.downloadAttachment(row.id)}>Download Photo</button></TableCell>
+              <TableCell align="left"><button onClick={() => this.downloadPdf(row.id)}>Download PDF</button></TableCell>
+            
             </TableRow>
           ))}
         </TableBody>

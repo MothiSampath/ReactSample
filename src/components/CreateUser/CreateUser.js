@@ -13,6 +13,7 @@ export default class CreateUser extends React.Component {
             email: '',
             password: '',
             file: null,
+            pdfFile: null,
             isPopupOpen: true
         };
     }
@@ -36,6 +37,7 @@ export default class CreateUser extends React.Component {
         formdata.append('password', this.state.password)
         formdata.append('email', this.state.email)
         formdata.append('fileToUpload', this.state.file)
+        formdata.append('pdfFile', this.state.pdfFile)
 
         axios.post('http://localhost:8080/users/saveUser', formdata
            
@@ -69,6 +71,12 @@ export default class CreateUser extends React.Component {
         this.setState({file: file})
     }
 
+    myPdfHandler = (event) =>{
+        let file = event.target.files[0]
+
+        this.setState({pdfFile: file})
+    }
+
     render() {
         return (
         <Popup show={this.state.isPopupOpen}  trigger={<button> Create User</button>} position="bottom center">
@@ -98,6 +106,12 @@ export default class CreateUser extends React.Component {
                     type='file'
                     name='file'
                     onChange={this.myFileHandler}
+                />
+                <p>Upload a pdf</p>
+                <input
+                    type='file'
+                    name='pdfFile'
+                    onChange={this.myPdfHandler}
                 />
                 <br/>
                 <input type='submit'/>
